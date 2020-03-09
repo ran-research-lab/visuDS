@@ -25,25 +25,36 @@
 // or implied, of the University of San Francisco
 
 
-var ARRAY_START_X = 100;
-var ARRAY_START_Y = 200;
+var ARRAY_START_X = 300;
+var ARRAY_START_Y = 40;
 var ARRAY_ELEM_WIDTH = 50;
 var ARRAY_ELEM_HEIGHT = 50;
 
 var ARRRAY_ELEMS_PER_LINE = 15;
 var ARRAY_LINE_SPACING = 130;
 
+var A_POS_X = 180;
+var A_POS_Y = 40;
+var A_LABEL_X = 130;
+var A_LABEL_Y =  40;
+
+
 var TOP_POS_X = 180;
 var TOP_POS_Y = 100;
 var TOP_LABEL_X = 130;
 var TOP_LABEL_Y =  100;
 
-var PUSH_LABEL_X = 50;
-var PUSH_LABEL_Y = 30;
-var PUSH_ELEMENT_X = 120;
-var PUSH_ELEMENT_Y = 30;
+var PUSH_LABEL_X = 100;
+var PUSH_LABEL_Y = 200;
+var PUSH_ELEMENT_X = 200;
+var PUSH_ELEMENT_Y = 200;
 
-var SIZE = 30;
+var OBJ_POS_X = 170;
+var OBJ_POS_Y = 90;
+var OBJ_ELEM_WIDTH = 130;
+var OBJ_ELEM_HEIGHT = 170;
+
+var SIZE = 8;
 
 function StackArray(am, w, h)
 {
@@ -117,6 +128,12 @@ StackArray.prototype.setup = function()
 		this.arrayID[i]= this.nextIndex++;
 		this.arrayLabelID[i]= this.nextIndex++;
 	}
+
+	this.objID = this.nextIndex++;
+
+	this.AID = this.nextIndex++;
+	this.ALabelID = this.nextIndex++;
+
 	this.topID = this.nextIndex++;
 	this.topLabelID = this.nextIndex++;
 	
@@ -134,6 +151,13 @@ StackArray.prototype.setup = function()
 		this.cmd("SetForegroundColor", this.arrayLabelID[i], "#0000FF");
 		
 	}
+
+	this.cmd("CreateRectangle", this.objID, "",OBJ_ELEM_WIDTH, OBJ_ELEM_HEIGHT, OBJ_POS_X, OBJ_POS_Y);
+	
+	this.cmd("CreateLabel", this.ALabelID, "A", A_LABEL_X, A_LABEL_Y);
+	this.cmd("CreateRectangle", this.AID, "", ARRAY_ELEM_WIDTH, ARRAY_ELEM_HEIGHT, A_POS_X, A_POS_Y);
+	
+	this.cmd("Connect",  this.AID, this.arrayID[0]);
 	this.cmd("CreateLabel", this.topLabelID, "top", TOP_LABEL_X, TOP_LABEL_Y);
 	this.cmd("CreateRectangle", this.topID, 0, ARRAY_ELEM_WIDTH, ARRAY_ELEM_HEIGHT, TOP_POS_X, TOP_POS_Y);
 	
@@ -243,7 +267,7 @@ StackArray.prototype.pop = function(ignored)
 	this.cmd("SetText", this.leftoverLabelID, "");
 
 	
-	this.cmd("CreateLabel", labPopID, "Popped Value: ", PUSH_LABEL_X, PUSH_LABEL_Y);
+	// this.cmd("CreateLabel", labPopID, "Popped Value: ", PUSH_LABEL_X, PUSH_LABEL_Y);
 	
 	
 	this.cmd("SetHighlight", this.topID, 1);
@@ -264,12 +288,12 @@ StackArray.prototype.pop = function(ignored)
 	
 	this.cmd("CreateLabel", labPopValID,this.arrayData[this.top], xpos, ypos);
 	this.cmd("Settext", this.arrayID[this.top], "");
-	this.cmd("Move", labPopValID,  PUSH_ELEMENT_X, PUSH_ELEMENT_Y);
+	// this.cmd("Move", labPopValID,  PUSH_ELEMENT_X, PUSH_ELEMENT_Y);
 	this.cmd("Step");
 	this.cmd("Delete", labPopValID)
-	this.cmd("Delete", labPopID);
+	// this.cmd("Delete", labPopID);
 	this.cmd("Delete", this.highlight1ID);
-	this.cmd("SetText", this.leftoverLabelID, "Popped Value: " + this.arrayData[this.top]);
+	// this.cmd("SetText", this.leftoverLabelID, "Popped Value: " + this.arrayData[this.top]);
 
 
 	
